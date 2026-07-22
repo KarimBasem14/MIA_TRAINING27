@@ -1,4 +1,5 @@
 from itertools import combinations
+import re
 
 space = "     " # Added it globally for ease of change
 
@@ -106,10 +107,22 @@ if __name__ == "__main__":
     combos = list(combinations(countries, 2))
 
     for country1, country2 in combos:
-        score_str = input(f"Enter score for {country1} vs {country2}: ")
-        # Assuming each score is less than 10 and more than -1
-        country1_score = int(score_str[0])
-        country2_score = int(score_str[2])
+        while True:
+            score_str = input(f"Enter score for {country1} vs {country2}: ").strip()
+
+            # Validate input using regex
+            match = re.match(r"^(\d+)-(\d+)$", score_str)
+
+            if match:
+                country1_score = int(match.group(1))
+                country2_score = int(match.group(2))
+                break  # Valid input, exit loop
+
+            print("Invalid format, please reenter the scores in the format X-Y: ")
+
+
+        # country1_score = int(score_str[0])
+        # country2_score = int(score_str[2])
         cup.process_match(country1, country2, country1_score, country2_score)
 
     print(cup)
