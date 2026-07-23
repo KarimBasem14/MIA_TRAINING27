@@ -44,7 +44,7 @@ class Player:
 
 
 class Team:
-    def __init__(self, country_name : str, roster : List[Player], active_lineup : List[Player], bench : List[Player]):
+    def __init__(self, country_name : str, roster : List[Player], active_lineup : List[Player]):
         self.country_name = country_name
         self.roster = roster
         self.active_lineup = active_lineup
@@ -83,15 +83,18 @@ class MatchEvent:
     # For immutable classes, attrs are specified like that
     # and u have to specify them all when constructing the class
     # since it's immutable
-    event_id : str = str(uuid.uuid4()) # assign a unique id to each event
     event_type : EventType
     minute : int
     team : Team
     player : Player
     outcome_text : str
+    event_id : str = str(uuid.uuid4()) # assign a unique id to each event
 
     def to_string(self):
-        return f"[{self.minute}] {self.event_type.name} | {self.team.country_name} | {self.player.name} -> {self.outcome_text}"
+        team_name = self.team.country_name if self.team else "Match Admin"
+        player_name = self.player.name if self.player else "N/A"
+        
+        return f"[{self.minute}] {self.event_type.name} | {team_name} | {player_name} -> {self.outcome_text}"
 
 
 class Match:
@@ -139,7 +142,7 @@ class Match:
 
     def process_goal_attempt(self, attacking_team : Team, defending_team : Team):
 
-        if random.Random() < 0.10:
+        if random.random() < 0.10:
             aggregate_attack = attacking_team.get_aggregate_attack()
             aggregate_defense = defending_team.get_aggregate_defense()
 
@@ -157,7 +160,7 @@ class Match:
                     minute=self.current_minute,
                     team=attacking_team,
                     player=scoring_player,
-                    outcome_text=f"GOAL by {attacking_team}"
+                    outcome_text=f"GOAL by {attacking_team.country_name}"
                 )
                 self.timeline.append(event)
                 
