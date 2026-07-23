@@ -1,6 +1,7 @@
 from enum import Enum, auto
 from typing import List
-from random import random
+import random
+import uuid
 from dataclasses import dataclass # class decorators
 
 # We have to give a value for each entry in an enum
@@ -56,19 +57,24 @@ class Team:
         return [player for player in self.roster if player not in self.active_lineup]
 
     def get_aggregate_attack(self):
-        pass
+        attackers = [p for p in self.active_lineup if p.position in (Position.FORWARD, Position.MIDFIELDER)]
+        if not attackers: return 0.0
+        return sum(p.get_effective_attack() for p in attackers) / len(attackers)
 
-    def effective_attack(self):
-        pass
 
     def get_aggregate_defense(self):
-        pass
+        defenders = [p for p in self.active_lineup if p.position in (Position.DEFENDER, Position.GOALKEEPER)]
+        if not defenders: return 0.0
+        return sum(p.get_effective_defense() for p in defenders) / len(defenders)
 
-    def get_effective_defense(self):
-        pass
 
     def execute_substitution(self, player_out, player_in):
-        pass
+        if self.substitutions_remaining > 0 and player_out in self.active_lineup and player_in in self.bench:
+            self.active_lineup.remove(player_out)
+            self.active_lineup.append(player_in)
+            self.substitutions_remaining -= 1
+            return True
+        return False
 
 
 @dataclass(frozen = True) # Marks it as immutable
@@ -77,7 +83,7 @@ class MatchEvent:
     # For immutable classes, attrs are specified like that
     # and u have to specify them all when constructing the class
     # since it's immutable
-    event_id : str
+    event_id : str = str(uuid.uuid4()) # assign a unique id to each event
     event_type : EventType
     minute : int
     team : Team
