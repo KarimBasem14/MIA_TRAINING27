@@ -166,3 +166,78 @@ class Match:
                     self.home_score += 1
                 else:
                     self.away_score += 1
+
+# AI helped me on this fn! (I am not much into football)
+def create_test_team(country_name : str) -> Team:
+    roster = []
+    active_lineup = []
+
+    # 4-4-2
+    active_positions = [
+        Position.GOALKEEPER,
+        Position.DEFENDER, Position.DEFENDER, Position.DEFENDER, Position.DEFENDER,
+        Position.MIDFIELDER, Position.MIDFIELDER, Position.MIDFIELDER, Position.MIDFIELDER,
+        Position.FORWARD, Position.FORWARD
+    ]
+
+    for i, pos in enumerate(active_positions):
+        # Assign random base attack/defense stats between 70 and 95
+        player = Player(
+            name=f"{country_name}_Player_{i+1}", 
+            position=pos, 
+            base_attack=random.randint(70, 95), 
+            base_defense=random.randint(70, 95)
+        )
+        active_lineup.append(player)
+        roster.append(player)
+
+
+    # Generate 15 bench players
+    for i in range(11, 26):
+        # Bench players get slightly lower random stats
+        bench_player = Player(
+            name=f"{country_name}_Sub_{i+1}", 
+            position=random.choice(list(Position)), 
+            base_attack=random.randint(60, 85), 
+            base_defense=random.randint(60, 85)
+        )
+        roster.append(bench_player)
+        
+    return Team(country_name, roster, active_lineup)
+
+
+def run_simulation():
+    # Instantiate two rival teams
+    home_team = create_test_team("ARG")
+    away_team = create_test_team("FRA")
+    
+    # Initialize the match engine
+    championship_match = Match(home_team, away_team)
+    
+    print(f"=====================================================")
+    print(f"⚽ KICKOFF: {home_team.country_name} vs {away_team.country_name}")
+    print(f"=====================================================")
+    
+    # Run the Regulation Phase simulation loop (Minutes 1 to 90)
+    while championship_match.phase == MatchPhase.REGULATION:
+        championship_match.run_minute_tick()
+        
+        # Optional: Print a half-time marker for visual clarity
+        if championship_match.current_minute == 45:
+            print("--- ⏱️ HALF TIME ---")
+            
+    # Output the definitive timeline history
+    print("\n--- 📜 MATCH TIMELINE ---")
+    if not championship_match.timeline:
+         print("No major events occurred.")
+    else:
+        for event in championship_match.timeline:
+            print(event.to_string())
+            
+    # Display the final results
+    print(f"\n=====================================================")
+    print(f"🏆 FINAL SCORE: {home_team.country_name} {championship_match.home_score} - {championship_match.away_score} {away_team.country_name}")
+    print(f"=====================================================")
+
+if __name__ == "__main__":
+    run_simulation()
