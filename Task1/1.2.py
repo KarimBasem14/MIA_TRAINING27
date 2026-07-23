@@ -4,6 +4,10 @@ class TicketCodec:
         pass
 
     def weighted_sum(self, ticket):
+        """
+            How it works:
+                For each character it multiplies its index (base 1) and its ord() and adds it to the accumlator variable (coded_sum)
+        """
         coded_sum = 0
         for i, char in enumerate(ticket):
             coded_sum += (i+1) * ord(char)
