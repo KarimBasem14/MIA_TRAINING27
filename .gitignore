@@ -1,2 +1,6 @@
 *.zip
 *.rar
+/Task5.2/Phase1/data
+/Task5.2/Phase1/resnet34_caltech101.pth
+/Task5.1/1.2/balls
+/Task5.2/Phase1/mobilenetv2_caltech101.pth
