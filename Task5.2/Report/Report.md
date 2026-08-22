@@ -34,10 +34,10 @@ def fgsm_attack(image, epsilon, data_grad):
 Here is an example from the CalTech101 dataset:
 
 Original Image:
-![[./Media/image.png|154]]
+<img src="./Media/image.png" width="155">
 
 Image after Attack:
-![[./Media/image-1.png|155]]
+<img src="./Media/image-1.png" width="155">
 
 ## How Epsilon affects the attack strength
 
@@ -46,7 +46,7 @@ Thus, $\epsilon$ represents the strength of the attack, more $\epsilon$ more dam
 
 Here is a comparison between different epsilons and how they affect the final accuracy:
 For each $\epsilon$, we choose a random subset of the data of size 50, and attack the data and check the model's accuracy.
-![[./Media/image-2.png|226]]
+<img src="./Media/image-2.png" width="226">
 
 As expected, when $\epsilon$ is zero, the attack doesn't actually do a thing as:
 $$
@@ -61,7 +61,7 @@ This is why we want to find a small $\epsilon$ that almost grantees bad accuracy
 
 This minimum $\epsilon$ could be between 0.1 and 0.15, as after that we can see some fluctuations start to appear.
 
-![[./Media/image-3.png|238]]
+<img src="./Media/image-3.png" width="238">
 
 # Model Explainability
 
