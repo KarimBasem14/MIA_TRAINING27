@@ -34,10 +34,17 @@ def fgsm_attack(image, epsilon, data_grad):
 Here is an example from the CalTech101 dataset:
 
 Original Image:
+<<<<<<< HEAD
 ![[image.png|154]]
 
 Image after Attack:
 ![[image-1.png|155]]
+=======
+<img src="./Media/image.png" width="155">
+
+Image after Attack:
+<img src="./Media/image-1.png" width="155">
+>>>>>>> 70a2c527b3894f038fc0422e0566725255f41641
 
 ## How Epsilon affects the attack strength
 
@@ -46,7 +53,11 @@ Thus, $\epsilon$ represents the strength of the attack, more $\epsilon$ more dam
 
 Here is a comparison between different epsilons and how they affect the final accuracy:
 For each $\epsilon$, we choose a random subset of the data of size 50, and attack the data and check the model's accuracy.
+<<<<<<< HEAD
 ![[image-2.png|226]]
+=======
+<img src="./Media/image-2.png" width="226">
+>>>>>>> 70a2c527b3894f038fc0422e0566725255f41641
 
 As expected, when $\epsilon$ is zero, the attack doesn't actually do a thing as:
 $$
@@ -61,7 +72,11 @@ This is why we want to find a small $\epsilon$ that almost grantees bad accuracy
 
 This minimum $\epsilon$ could be between 0.1 and 0.15, as after that we can see some fluctuations start to appear.
 
+<<<<<<< HEAD
 ![[image-3.png|238]]
+=======
+<img src="./Media/image-3.png" width="238">
+>>>>>>> 70a2c527b3894f038fc0422e0566725255f41641
 
 # Model Explainability
 
@@ -69,6 +84,7 @@ Now to understand how exactly does the attack from above affect the model we use
 1. Gradient Saliency Map: Draws a map of gradient magnitudes of each pixel
 2. Grad-Cam: Draws a map that shows where the model "focuses" its view on
 
+<<<<<<< HEAD
 ## Gradient Saliency Map
 
 ### Main Idea
@@ -285,3 +301,6 @@ When the image was attacked, the original model's focus got scattered and it mad
 Then when the model was hardened, it started focusing again on the 2 circles and made a correct prediction!
 
 ![[image-9.png|407]]
+=======
+# Defense Methods
+>>>>>>> 70a2c527b3894f038fc0422e0566725255f41641
